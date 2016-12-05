@@ -608,7 +608,7 @@ use vars qw(@i2c_adapter_names);
 		i2c_detect => sub { adt7467_detect(@_, 2); },
 	}, {
 		name => "Analog Devices ADT7466",
-		driver => "to-be-written",
+		driver => "lm85",
 		i2c_addrs => [0x4c],
 		i2c_detect => sub { adt7467_detect(@_, 3); },
 	}, {
