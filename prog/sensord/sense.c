@@ -239,9 +239,14 @@ int readChips(void)
 {
 	int ret = 0;
 
-	sensorLog(LOG_DEBUG, "sensor read started");
+	/*
+	 * Debian mod: kill the debug messages, since they spam syslog every
+	 * minute. -- JEH
+	 */
+
+	/* sensorLog(LOG_DEBUG, "sensor read started"); */
 	ret = doChips(DO_READ);
-	sensorLog(LOG_DEBUG, "sensor read finished");
+	/* sensorLog(LOG_DEBUG, "sensor read finished"); */
 
 	return ret;
 }
