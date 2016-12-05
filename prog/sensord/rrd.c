@@ -238,6 +238,10 @@ static void rrdGetSensors_DS(void *_data, const char *rawLabel,
 			min = "-100";
 			max = "250";
 			break;
+		case DataType_loadavg:
+			min = "0";
+			max = "U";
+			break;
 		default:
 			min = max = "U";
 			break;
@@ -257,8 +261,12 @@ static int rrdGetSensors(const char **argv)
 	int ret = 0;
 	struct ds data = { 0, argv};
 	ret = applyToFeatures(rrdGetSensors_DS, &data);
-	if (!ret && sensord_args.doLoad)
-		rrdGetSensors_DS(&data, LOADAVG, LOAD_AVERAGE, NULL);
+	if (!ret && sensord_args.doLoad) {
+		FeatureDescriptor feature;
+		feature.type = DataType_loadavg;
+		feature.rrd = 1;
+		rrdGetSensors_DS(&data, LOADAVG, LOAD_AVERAGE, &feature);
+	}
 	return ret ? -1 : data.num;
 }
 
